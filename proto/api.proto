@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "github.com/wayanputri/backendPY"; // Tambahkan ini
+
+import "google/api/annotations.proto"; // Untuk HTTP Gateway
+
+service ApiService {
+  rpc GetUser (UserRequest) returns (UserResponse) {
+    option (google.api.http) = {
+      get: "/api/user/{id}" // Mengaktifkan akses via HTTP
+    };
+  }
+}
+
+message UserRequest {
+  int32 id = 1;
+}
+
+message UserResponse {
+  string name = 1;
+  int32 age = 2;
+}
