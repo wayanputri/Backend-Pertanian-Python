@@ -51,7 +51,8 @@ def get_user(id):
     # Mengembalikan data dalam format JSON
     return jsonify({
         "name": response.name,
-        "age": response.age
+        "role": response.role,
+        "email":response.email
     })
 
 if __name__ == '__main__':

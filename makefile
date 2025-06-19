@@ -13,7 +13,7 @@ clean:
 	@if exist $(OUT_DIR) rmdir /s /q $(OUT_DIR)
 
 run-ui:
-	python app_ui.py
+	python app_http.py
 run-grpc:
 	python grpc_server.py
 update-requirement:

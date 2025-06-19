@@ -1,36 +1,30 @@
 import psycopg2
+from psycopg2 import OperationalError
 
-def ConnectDB():
-    try:
-        # Menghubungkan ke database
-        connection = psycopg2.connect(
-            host="localhost",      # Ganti dengan host PostgreSQL kamu
-            port="5432",           # Port default PostgreSQL
-            dbname="MasaDepan", # Ganti dengan nama database kamu
-            user="postgres",   # Ganti dengan username PostgreSQL kamu
-            password="wayan123"     # Ganti dengan password PostgreSQL kamu
-        )
+class PostgreSQLConnection:
+    _connection = None
 
-        # Membuat cursor untuk menjalankan query
-        cursor = connection.cursor()
-        print("Koneksi berhasil!")
-        return cursor
-
-    except Exception as e:
-        print("Gagal terhubung ke database:", e)
-        return None  # Mengembalikan None jika koneksi gagal
-
-# # Pemanggilan fungsi ConnectDB
-# cursor = ConnectDB()
-
-# # Pastikan koneksi berhasil sebelum melanjutkan
-# if cursor:
-#     # Lakukan operasi dengan cursor di sini, misalnya query SELECT
-#     cursor.execute("SELECT id, name, email, role, password FROM public.users;")
-#     result = cursor.fetchone()
-#     print("PostgreSQL version:", result)
-
-#     # Jangan lupa menutup cursor dan connection setelah selesai
-#     cursor.close()
-# else:
-#     print("Tidak dapat melakukan operasi karena koneksi gagal.")
+    @classmethod
+    def connect(cls):
+        if cls._connection is None:
+            try:
+                # Koneksi ke PostgreSQL
+                cls._connection = psycopg2.connect(
+                    host="localhost",      # Alamat host PostgreSQL
+                    user="postgres",       # Username untuk login ke PostgreSQL
+                    password="wayan123",   # Password untuk user
+                    dbname="MasaDepan",  # Nama database yang akan digunakan
+                    port=5432              # Port PostgreSQL (default 5432)
+                )
+                print("Connected to PostgreSQL!")
+            except OperationalError as e:
+                print(f"Error connecting to PostgreSQL: {e}")
+                raise
+        return cls._connection
+    
+    @classmethod
+    def close(cls):
+        if cls._connection:
+            cls._connection.close()
+            cls._connection = None
+            print("PostgreSQL connection closed.")

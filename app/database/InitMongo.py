@@ -1,33 +1,20 @@
 from pymongo import MongoClient
 
-def Init_mongo():
-    try:
-        # Menghubungkan ke MongoDB di localhost dan port default 27017
-        client = MongoClient('mongodb://localhost:27017/')  # Ganti URL jika MongoDB kamu ada di server lain
+class MongoDBConnection:
+    _connection = None
+    _db = None
 
-        # Memilih database yang akan digunakan (jika belum ada, MongoDB akan membuatnya)
-        db = client["masa_depan"]  # Ganti dengan nama database yang diinginkan
+    @classmethod
+    def connect(cls):
+        if cls._connection is None:
+            cls._connection = MongoClient("mongodb://localhost:27017/")
+            cls._db = cls._connection["masa_depan"]
+            print("mongo db connected")
+        return cls._db
 
-        # Memilih koleksi (collection) dalam database
-        collection = db["masa_depan"]  # Ganti dengan nama koleksi yang diinginkan
-
-        print("Koneksi ke MongoDB berhasil!")
-
-        return db, collection
-
-    except Exception as e:
-        print(f"Gagal terhubung ke MongoDB: {e}")
-        return None, None
-
-# # Pemanggilan fungsi init_mongo
-# db, collection = Init_mongo()
-
-# # Jika koneksi berhasil, lakukan operasi pada database dan koleksi
-# if db is not None and collection is not None:
-#     # Menyisipkan data ke dalam koleksi
-#     data = {"nama": "John Doe", "umur": 30, "kota": "Jakarta"}
-#     collection.insert_one(data)
-
-#     # Mengambil data dari koleksi
-#     result = collection.find_one({"nama": "John Doe"})
-#     print("Data yang diambil:", result)
+    @classmethod
+    def close(cls):
+        if cls._connection:
+            cls._connection.close()
+            cls._connection = None
+            print("MongoDB connection closed.")

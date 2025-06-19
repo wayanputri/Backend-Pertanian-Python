@@ -6,6 +6,7 @@ click==8.2.1
 colorama==0.4.6
 dnspython==2.7.0
 Flask==3.1.1
+flask-swagger-ui==5.21.0
 google-api-core==2.25.1
 google-api-python-client==2.172.0
 google-auth==2.40.3
