@@ -19,7 +19,7 @@ run-grpc:
 update-requirement:
 	pip freeze > requirements.txt
 
-nenv:
+create-env:
 	.\venv\Scripts\activate
 
 

@@ -4,7 +4,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'pb'))
 
 import sys
 import os
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify,request, send_from_directory
 from flask_swagger_ui import get_swaggerui_blueprint
 import grpc
 import api_pb2
@@ -36,7 +36,7 @@ def swagger_json():
 
 # Koneksi ke server gRPC
 def get_grpc_stub():
-    channel = grpc.insecure_channel('localhost:50051')  # Menghubungkan ke server gRPC yang berjalan di port 50051
+    channel = grpc.insecure_channel('192.168.98.76:50052')  # Menghubungkan ke server gRPC yang berjalan di port 50051
     stub = api_pb2_grpc.ApiServiceStub(channel)
     return stub
 
@@ -55,5 +55,30 @@ def get_user(id):
         "email":response.email
     })
 
+@app.route('/data', methods=['POST'])
+def receive_data():
+    # Dapatkan data JSON dari body request
+    data = request.json
+    stub = get_grpc_stub()
+    suhu = data.get('temperature')  # Pastikan ini float
+    kelembapan = data.get('humidity')  # Pastikan ini float
+    print(suhu)
+    print(kelembapan)
+    
+    # Pastikan data yang diterima adalah float
+    if isinstance(suhu, float) and isinstance(kelembapan, float):
+        request1 = api_pb2.SensorRequest(temperature=suhu, kelembapan=kelembapan)
+    else:
+        return jsonify({"error": "Invalid data format"}), 400
+    
+    # Kirimkan data ke gRPC
+    try:
+        response = stub.GetSensorSuhu(request1)
+        return jsonify({"message": response.data})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# Menjalankan aplikasi Flask pada port yang sesuai
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)  # Menjalankan server Flask di port 5000
+    app.run(debug=True, host='0.0.0.0', port=5002)  # Flask berjalan di port 5002

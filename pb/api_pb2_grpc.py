@@ -39,12 +39,23 @@ class ApiServiceStub(object):
                 request_serializer=api__pb2.UserRequest.SerializeToString,
                 response_deserializer=api__pb2.UserResponse.FromString,
                 _registered_method=True)
+        self.GetSensorSuhu = channel.unary_unary(
+                '/api.ApiService/GetSensorSuhu',
+                request_serializer=api__pb2.SensorRequest.SerializeToString,
+                response_deserializer=api__pb2.SensorResponse.FromString,
+                _registered_method=True)
 
 
 class ApiServiceServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetUser(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetSensorSuhu(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -57,6 +68,11 @@ def add_ApiServiceServicer_to_server(servicer, server):
                     servicer.GetUser,
                     request_deserializer=api__pb2.UserRequest.FromString,
                     response_serializer=api__pb2.UserResponse.SerializeToString,
+            ),
+            'GetSensorSuhu': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetSensorSuhu,
+                    request_deserializer=api__pb2.SensorRequest.FromString,
+                    response_serializer=api__pb2.SensorResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -86,6 +102,33 @@ class ApiService(object):
             '/api.ApiService/GetUser',
             api__pb2.UserRequest.SerializeToString,
             api__pb2.UserResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetSensorSuhu(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/api.ApiService/GetSensorSuhu',
+            api__pb2.SensorRequest.SerializeToString,
+            api__pb2.SensorResponse.FromString,
             options,
             channel_credentials,
             insecure,

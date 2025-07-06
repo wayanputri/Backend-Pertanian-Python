@@ -7,10 +7,12 @@ import grpc
 from concurrent import futures
 import time
 import api_pb2_grpc
+import asyncio
 from app.database.DBConnections import DBConnection
 import api_grpc
 
-def serve():
+# Jadikan serve() sebagai async
+async def serve():
     # Membuat server gRPC
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     DBConnection.connect_postgresql()
@@ -21,11 +23,18 @@ def serve():
     api_pb2_grpc.add_ApiServiceServicer_to_server(api_grpc.ApiService(), server)
     
     # Menentukan port server gRPC
-    server.add_insecure_port('[::]:50051')
+    server.add_insecure_port('192.168.98.76:50052')
     
-    print("Server gRPC berjalan di port 50051...")
+    print("Server gRPC berjalan di port 50052...")
+    
+    # Mulai server
     server.start()
     
+    # Tunggu hingga server dihentikan
+    await asyncio.Event().wait()  # Tunggu sampai dihentikan (dengan signal)
+    
+    DBConnection.close_all()
+    print("Server dihentikan")
     
     try:
         while True:
@@ -34,7 +43,8 @@ def serve():
         server.stop(0)
         
     DBConnection.close_all()
-        
 
+# Jalankan fungsi async menggunakan event loop
 if __name__ == '__main__':
-    serve()
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(serve())  # Pastikan serve() dipanggil dengan run_until_complete

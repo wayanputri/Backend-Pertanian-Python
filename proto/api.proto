@@ -12,6 +12,11 @@ service ApiService {
       get: "/api/user/{id}" // Mengaktifkan akses via HTTP
     };
   }
+  rpc GetSensorSuhu (SensorRequest)returns (SensorResponse){
+    option (google.api.http) = {
+      post: "/data" // Mengaktifkan akses via HTTP
+    };
+  }
 }
 
 message UserRequest {
@@ -23,4 +28,13 @@ message UserResponse {
   string email = 2;
   string role = 3;
   string password = 4;
+}
+
+message SensorRequest{
+	string id = 1;
+	float temperature=2;
+	float kelembapan=3;
+}
+message SensorResponse{
+	string data = 1;
 }

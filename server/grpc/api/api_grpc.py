@@ -10,6 +10,7 @@ import api_pb2
 import api_pb2_grpc
 
 from server.grpc.repositori.User import UserQuery
+from server.grpc.repositori.Sensor import SensorQuery
 
 
 class ApiService(api_pb2_grpc.ApiServiceServicer):
@@ -31,4 +32,13 @@ class ApiService(api_pb2_grpc.ApiServiceServicer):
             context.set_code(grpc.StatusCode.NOT_FOUND)
             context.set_details(f"User with ID {user_id} not found.")
             return api_pb2.UserResponse()  # Kembalikan response kosong
+    def GetSensorSuhu(self, request, context):
+        sensor_query = SensorQuery()
+        id_sensor =sensor_query.insertSensor("DHT11","RB",1)
+        sensor_query.insertSensorDHT11(request.temperature,id_sensor,"Sensor Suhu")
+        sensor_query.insertSensorDHT11(request.kelembapan,id_sensor,"Sensor Kelembapan")
+
+        
+        # print(f"Received: id = {request.id}, temperature = {request.temperature}, kelembapan = {request.kelembapan}")
+        return api_pb2.SensorResponse(data="Data diterima")
         

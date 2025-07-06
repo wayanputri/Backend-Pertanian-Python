@@ -25,7 +25,7 @@ _sym_db = _symbol_database.Default()
 from google.api import annotations_pb2 as google_dot_api_dot_annotations__pb2
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\tapi.proto\x12\x03\x61pi\x1a\x1cgoogle/api/annotations.proto\"\x19\n\x0bUserRequest\x12\n\n\x02id\x18\x01 \x01(\x05\"K\n\x0cUserResponse\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x0c\n\x04role\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t2T\n\nApiService\x12\x46\n\x07GetUser\x12\x10.api.UserRequest\x1a\x11.api.UserResponse\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/api/user/{id}B!Z\x1fgithub.com/wayanputri/backendPYb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\tapi.proto\x12\x03\x61pi\x1a\x1cgoogle/api/annotations.proto\"\x19\n\x0bUserRequest\x12\n\n\x02id\x18\x01 \x01(\x05\"K\n\x0cUserResponse\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\r\n\x05\x65mail\x18\x02 \x01(\t\x12\x0c\n\x04role\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\"D\n\rSensorRequest\x12\n\n\x02id\x18\x01 \x01(\t\x12\x13\n\x0btemperature\x18\x02 \x01(\x02\x12\x12\n\nkelembapan\x18\x03 \x01(\x02\"\x1e\n\x0eSensorResponse\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t2\x9d\x01\n\nApiService\x12\x46\n\x07GetUser\x12\x10.api.UserRequest\x1a\x11.api.UserResponse\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/api/user/{id}\x12G\n\rGetSensorSuhu\x12\x12.api.SensorRequest\x1a\x13.api.SensorResponse\"\r\x82\xd3\xe4\x93\x02\x07\"\x05/dataB!Z\x1fgithub.com/wayanputri/backendPYb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -35,10 +35,16 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._serialized_options = b'Z\037github.com/wayanputri/backendPY'
   _globals['_APISERVICE'].methods_by_name['GetUser']._loaded_options = None
   _globals['_APISERVICE'].methods_by_name['GetUser']._serialized_options = b'\202\323\344\223\002\020\022\016/api/user/{id}'
+  _globals['_APISERVICE'].methods_by_name['GetSensorSuhu']._loaded_options = None
+  _globals['_APISERVICE'].methods_by_name['GetSensorSuhu']._serialized_options = b'\202\323\344\223\002\007\"\005/data'
   _globals['_USERREQUEST']._serialized_start=48
   _globals['_USERREQUEST']._serialized_end=73
   _globals['_USERRESPONSE']._serialized_start=75
   _globals['_USERRESPONSE']._serialized_end=150
-  _globals['_APISERVICE']._serialized_start=152
-  _globals['_APISERVICE']._serialized_end=236
+  _globals['_SENSORREQUEST']._serialized_start=152
+  _globals['_SENSORREQUEST']._serialized_end=220
+  _globals['_SENSORRESPONSE']._serialized_start=222
+  _globals['_SENSORRESPONSE']._serialized_end=252
+  _globals['_APISERVICE']._serialized_start=255
+  _globals['_APISERVICE']._serialized_end=412
 # @@protoc_insertion_point(module_scope)
