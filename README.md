@@ -97,7 +97,7 @@ void loop() {
     Serial.println("WiFi tidak terhubung!");
   }
 
-  // Tunggu 10 detik sebelum mengirimkan data lagi
+  // Tunggu 10 menit sebelum mengirimkan data lagi
   delay(600000);
 }
 
