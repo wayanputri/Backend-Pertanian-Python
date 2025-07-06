@@ -2,6 +2,23 @@
 
 Berikut adalah kode untuk menghubungkan ESP8266 dengan sensor DHT11 dan mengirimkan data ke API.
 
+## Deskripsi
+Proyek ini menggunakan **ESP8266** untuk menghubungkan sensor **DHT11** dengan API untuk mengirimkan data suhu dan kelembaban secara berkala. Sistem ini dapat digunakan dalam aplikasi IoT untuk memantau kondisi lingkungan, seperti suhu dan kelembaban di area pertanian.
+
+## Komponen yang Digunakan
+- **ESP8266**: Modul Wi-Fi yang digunakan untuk menghubungkan sensor ke jaringan.
+- **DHT11**: Sensor suhu dan kelembaban.
+- **API**: Endpoint untuk menerima data suhu dan kelembaban dari sensor.
+
+## Persyaratan
+Sebelum memulai, pastikan kamu telah menyiapkan beberapa hal berikut:
+1. **Wi-Fi**: Koneksi Wi-Fi untuk ESP8266.
+2. **Sensor DHT11**: Tersambung dengan pin GPIO ESP8266.
+3. **API**: Endpoint server yang siap menerima data dalam format JSON.
+4. **Arduino IDE**: Untuk meng-upload kode ke ESP8266.
+
+## Kode Program
+
 ```cpp
 
 #include <ESP8266WiFi.h>         // Library untuk ESP8266
@@ -83,4 +100,6 @@ void loop() {
   // Tunggu 10 detik sebelum mengirimkan data lagi
   delay(600000);
 }
+
+```
 
