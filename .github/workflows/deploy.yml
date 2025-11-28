@@ -44,7 +44,8 @@ jobs:
           script: |
             cd ~/deploy
             tar -xzf app.tar.gz
-            docker-compose down || true
-            docker-compose build
-            docker-compose up -d
-            docker-compose ps
+            docker compose down || true
+            docker compose build
+            docker compose up -d
+            docker compose ps
+
