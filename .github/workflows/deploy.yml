@@ -1,0 +1,49 @@
+name: CI/CD Docker Compose to VPS
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Set up Docker
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      # 3. Save docker-compose.yml dan source ke tar
+      - name: Package app for VPS
+        run: |
+          tar -czf app.tar.gz docker-compose.yml Dockerfile requirements.txt app_http.py grpc_server.py ./
+
+      # 4. Copy package to VPS
+      - name: Copy package to VPS
+        uses: appleboy/scp-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          source: "app.tar.gz"
+          target: "~/deploy"
+
+      # 5. Deploy on VPS via SSH using docker-compose
+      - name: Deploy on VPS
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          password: ${{ secrets.VPS_PASSWORD }}
+          script: |
+            cd ~/deploy
+            tar -xzf app.tar.gz
+            docker-compose down || true
+            docker-compose build
+            docker-compose up -d
+            docker-compose ps

@@ -23,7 +23,7 @@ async def serve():
     api_pb2_grpc.add_ApiServiceServicer_to_server(api_grpc.ApiService(), server)
     
     # Menentukan port server gRPC
-    server.add_insecure_port('192.168.98.76:50052')
+    server.add_insecure_port('38.47.176.189:50052')
     
     print("Server gRPC berjalan di port 50052...")
     
@@ -45,6 +45,7 @@ async def serve():
     DBConnection.close_all()
 
 # Jalankan fungsi async menggunakan event loop
-if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
+if __name__ == '__main__': 
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
     loop.run_until_complete(serve())  # Pastikan serve() dipanggil dengan run_until_complete

@@ -36,7 +36,7 @@ def swagger_json():
 
 # Koneksi ke server gRPC
 def get_grpc_stub():
-    channel = grpc.insecure_channel('192.168.98.76:50052')  # Menghubungkan ke server gRPC yang berjalan di port 50051
+    channel = grpc.insecure_channel('38.47.176.189:50052')  # Menghubungkan ke server gRPC yang berjalan di port 50051
     stub = api_pb2_grpc.ApiServiceStub(channel)
     return stub
 

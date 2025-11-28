@@ -7,7 +7,8 @@ class MongoDBConnection:
     @classmethod
     def connect(cls):
         if cls._connection is None:
-            cls._connection = MongoClient("mongodb://localhost:27017/")
+            # cls._connection = MongoClient("mongodb://localhost:27017/")
+            cls._connection = MongoClient("mongodb://myuser:mypassword@38.47.176.189:27017/")
             cls._db = cls._connection["masa_depan"]
             print("mongo db connected")
         return cls._db

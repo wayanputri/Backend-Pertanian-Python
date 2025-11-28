@@ -10,10 +10,10 @@ class PostgreSQLConnection:
             try:
                 # Koneksi ke PostgreSQL
                 cls._connection = psycopg2.connect(
-                    host="localhost",      # Alamat host PostgreSQL
-                    user="postgres",       # Username untuk login ke PostgreSQL
-                    password="wayan123",   # Password untuk user
-                    dbname="MasaDepan",  # Nama database yang akan digunakan
+                    host="38.47.176.189",      # Alamat host PostgreSQL
+                    user="myuser",       # Username untuk login ke PostgreSQL
+                    password="mypassword",   # Password untuk user
+                    dbname="mydb",  # Nama database yang akan digunakan
                     port=5432              # Port PostgreSQL (default 5432)
                 )
                 print("Connected to PostgreSQL!")

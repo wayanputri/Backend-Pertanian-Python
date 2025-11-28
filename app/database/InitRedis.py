@@ -7,7 +7,7 @@ class RedisConnection:
     def connect(cls):
         if cls._connection is None:
             cls._connection = redis.StrictRedis(
-                host='localhost', port=6379, db=0)
+                host='38.47.176.189', port=6379, db=0)
             print("redis connected")
         return cls._connection
 
