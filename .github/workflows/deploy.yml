@@ -18,8 +18,8 @@ jobs:
       - name: Set up Docker
         uses: docker/setup-buildx-action@v2
 
-      # 3. Save docker-compose.yml dan source ke tar
-      - name: Package app for VPS
+      # 3. Package app for VPS
+      - name: Package app
         run: |
           tar -czf app.tar.gz docker-compose.yml Dockerfile requirements.txt app_http.py grpc_server.py ./
 
@@ -33,7 +33,7 @@ jobs:
           source: "app.tar.gz"
           target: "~/deploy"
 
-      # 5. Deploy on VPS via SSH using docker-compose
+      # 5. Deploy on VPS via SSH
       - name: Deploy on VPS
         uses: appleboy/ssh-action@v1
         with:
